@@ -12,20 +12,19 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use Authenticatable, Authorizable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    protected $table='users';
+    protected $primaryKey='id';
     protected $fillable = [
-        'name', 'email',
+        'id','name', 'address','phone_number','username', 'password', 'role_id', 'polyclinic_id'
     ];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
+    public function role(){
+    	return $this->belongsTo('App\Role','id','role_id');
+    }
+    public function polyclinic(){
+    	return $this->belongsTo('App\Polyclinic','id','polyclinic_id');
+    }
+
     protected $hidden = [
         'password',
     ];
